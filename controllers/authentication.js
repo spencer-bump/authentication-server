@@ -9,7 +9,13 @@ const tokenForUser = user => {
   return jwt.encode({ sub: user._id, iat: timestamp }, secret);
 }
 
-exports.signup = function(req, res, next) {
+exports.signin = (req, res, next) => {
+  // User is auth'd and needs a token
+  // passport stores return done(null, user) in req.user !!!
+  res.send({ token: tokenForUser(req.user) });
+}
+
+exports.signup = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
 
